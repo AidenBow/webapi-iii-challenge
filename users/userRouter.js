@@ -22,7 +22,13 @@ router.get('/', (req, res) => {
 });
 
 router.get('/:id', (req, res) => {
-
+  userDb.getById(req.params.id)
+  .then(user => {
+    res.status(200).json(user)
+  })
+  .catch(err => {
+    res.status(500).json(err)
+  })
 });
 
 router.get('/:id/posts', (req, res) => {
