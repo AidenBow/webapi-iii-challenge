@@ -4,7 +4,13 @@ const userDb = require("./userDb")
 const router = express.Router();
 
 router.post('/', (req, res) => {
-
+  userDb.insert(req.body)
+    .then(user => {
+      res.status(200).json(user)
+    })
+    .catch(err => {
+      res.status(500).json(err)
+    })
 });
 
 router.post('/:id/posts', (req, res) => {
@@ -23,16 +29,22 @@ router.get('/', (req, res) => {
 
 router.get('/:id', (req, res) => {
   userDb.getById(req.params.id)
-  .then(user => {
-    res.status(200).json(user)
-  })
-  .catch(err => {
-    res.status(500).json(err)
-  })
+    .then(user => {
+      res.status(200).json(user)
+    })
+    .catch(err => {
+      res.status(500).json(err)
+    })
 });
 
 router.get('/:id/posts', (req, res) => {
-
+  userDb.getUserPosts(req.params.id)
+    .then(posts => {
+      res.status(200).json(posts)
+    })
+    .catch(err => {
+      res.status(500).json(err)
+    })
 });
 
 router.delete('/:id', (req, res) => {
